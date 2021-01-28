@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "DiscoApp<disco-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.disco.DiscoApp",
+            "projectName": "disco-svc",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "UiApp<ui-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.ui.UiApp",
+            "projectName": "ui-svc",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "ReportApp<report-svc> NO_JPA",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.report.ReportApp",
+            "projectName": "report-svc",
+            "args": ["--spring.profiles.active=NO_JPA"]
+        },
+        {
+            "type": "java",
+            "name": "ValidApp<valid-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.valid.ValidApp",
+            "projectName": "valid-svc",
+            "args": ["--spring.profiles.active=NO_JPA"]
+        }
+    ]
+}
