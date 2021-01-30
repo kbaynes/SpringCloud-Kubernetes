@@ -1,0 +1,41 @@
+# builds a base image for Java Apps
+# includes mysql-client, Python3, and AWS CLI
+
+# base alpine
+FROM alpine:3
+# JDK 11
+RUN apk --no-cache add openjdk11 \
+	--repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+# add mysql-client
+RUN apk add --no-cache mysql-client
+# add AWS CLI
+RUN apk add --no-cache \
+				python3 \
+				py3-pip \
+				less \
+				bash \
+		&& pip3 install --upgrade pip \
+		&& pip3 install \
+				awscli \
+		&& rm -rf /var/cache/apk/* \
+		&& mkdir -p /mytask 
+# test aws install
+RUN aws --version
+COPY ./mytask/* /mytask/
+# Do not copy in, link it in
+# COPY ./app.jar /mytask/
+RUN chmod a+x /mytask/mytask.sh 
+# && \
+# 		chmod a+x /mytask/get-secret.sh && \
+# 		chmod a+x /mytask/parse-secret.py
+# COPY /mytask ./
+# RUN chmod +x /mytask
+CMD ["/mytask/mytask.sh"]
+# ENTRYPOINT ["/mytask/mytask.sh"]
+
+WORKDIR /mytask
+
+# COPY pom.xml /build/
+# COPY src /build/src/
+# COPY release /build/release/
+# RUN bash release/build.sh

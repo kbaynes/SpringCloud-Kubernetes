@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.assertj.core.api.Assertions;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("NO_JPA")
+@ActiveProfiles("nojpa")
 class HelloTest {
 
 	@LocalServerPort
@@ -22,14 +22,14 @@ class HelloTest {
 	@Autowired 
 	TestRestTemplate restTemplate;
 
-	@Value("${service.name}") 
-	String serviceName;
+	@Value("${spring.application.name}") 
+	String appName;
 
 	@Test
 	void helloTest() {
 		ResponseEntity<String> resp = this.restTemplate.getForEntity("http://localhost:" + port + "/hello",String.class);
 		Assertions.assertThat(resp).isNotNull();
-    Assertions.assertThat(resp.getBody()).contains(String.format("Hello from %s", this.serviceName));
+    Assertions.assertThat(resp.getBody()).contains(String.format("Hello from %s", this.appName));
     System.out.println(resp.getBody());
 	}
 

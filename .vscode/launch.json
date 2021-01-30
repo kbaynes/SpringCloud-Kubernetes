@@ -2,6 +2,26 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch ApiExerciseTest",
+            "request": "launch",
+            "mainClass": "k9b9.valid.ApiExerciseTest",
+            "projectName": "valid-svc"
+        },
+        {
+            "type": "java",
+            "name": "Launch HelloTestAsync",
+            "request": "launch",
+            "mainClass": "k9b9.valid.HelloTestAsync",
+            "projectName": "valid-svc"
+        },
+        {
+            "type": "java",
+            "name": "Launch ConfigApp",
+            "request": "launch",
+            "mainClass": "k9b9.config.ConfigApp"
+        },
+        {
+            "type": "java",
             "name": "DiscoApp<disco-svc>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -22,23 +42,97 @@
         },
         {
             "type": "java",
-            "name": "ReportApp<report-svc> NO_JPA",
+            "name": "ReportApp<report-svc> test nojpa",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.report.ReportApp",
             "projectName": "report-svc",
-            "args": ["--spring.profiles.active=NO_JPA"]
+            "args": [
+                "--spring.profiles.active=default,test,nojpa"
+            ]
         },
         {
             "type": "java",
-            "name": "ValidApp<valid-svc>",
+            "name": "ReportApp<report-svc> nojpa",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.report.ReportApp",
+            "projectName": "report-svc",
+            "args": [
+                "--spring.profiles.active=default,nojpa"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ValidApp<valid-svc> test nojpa",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.valid.ValidApp",
             "projectName": "valid-svc",
-            "args": ["--spring.profiles.active=NO_JPA"]
+            "args": [
+                "--spring.profiles.active=default,test,nojpa"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ValidApp<valid-svc> nojpa",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.valid.ValidApp",
+            "projectName": "valid-svc",
+            "args": [
+                "--spring.profiles.active=default,nojpa"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "GatewayApp<gateway-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.gateway.GatewayApp",
+            "projectName": "gateway-svc",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "HtxdbdApp<htxdbd-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.htxdbd.HtxdbdApp",
+            "projectName": "htxdbd-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "HtxdbdApp<htxdbd-svc> test",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.htxdbd.HtxdbdApp",
+            "projectName": "htxdbd-svc",
+            "args": [
+                "--spring.profiles.active=default,test"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ConfigApp<config-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.config.ConfigApp",
+            "projectName": "config-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
         }
     ]
 }

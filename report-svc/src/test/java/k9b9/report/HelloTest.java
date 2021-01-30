@@ -9,12 +9,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-import k9b9.report.entity.Hello;
+import k9b9.report.type.Hello;
 
 import org.assertj.core.api.Assertions;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("NO_JPA")
+@ActiveProfiles("nojpa")
 class HelloTest {
 
 	@LocalServerPort
@@ -23,14 +23,14 @@ class HelloTest {
 	@Autowired 
 	TestRestTemplate restTemplate;
 
-	@Value("${service.name}") 
-	String serviceName;
+	@Value("${spring.application.name}") 
+	String appName;
 
 	@Test
 	void helloTest() {
 		Hello hello = this.restTemplate.getForObject("http://localhost:" + port + "/api/hello", Hello.class);
 		Assertions.assertThat(hello).isNotNull();
-    Assertions.assertThat(hello.getMessage()).contains(String.format("Hello from %s", this.serviceName));
+    Assertions.assertThat(hello.getMessage()).contains(String.format("Hello from %s", this.appName));
     System.out.println(hello.getMessage());
 	}
 

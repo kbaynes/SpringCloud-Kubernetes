@@ -1,11 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI Service</title>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>SpringBoot-Kubernetes UI</title>
+  <meta name="description" content="">
+  <meta name="author" content="KevinB9">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Montserrat:400,300,600" rel="stylesheet" type="text/css">
+  <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Montserrat';
+    }
+
+    .logline {
+      font-family: 'Inconsolata';
+      font-size: medium;
+    }
+
+    .black-on-white {
+      color: #000;
+      background-color: #fff;
+    }
+
+    /* override styles when printing */
+    @media print {
+
+      body {
+        margin: 0;
+        color: #000;
+        background-color: #fff;
+      }
+
+    }
+
+    body {
+      background-image: linear-gradient(#003b4d, #009eb3);
+      background-repeat: no-repeat;
+      color: #e6ffff;
+    }
+
+    .container {
+      padding-top: 80px;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Hello from ui-svc</h1>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+		<div class="row">
+			<img src="/ui/images/springboot+k8s.png" height="256px"  />
+		</div>
+		<div class="row">
+			<div class="column">
+				<h1>SpringBoot + Kubernetes</h1>
+				<table class="u-full-width">
+					<thead>
+						<tr>
+            </tr>
+					</thead>
+					<tbody>
+            <tr>
+							<td>Discovery Service</td>
+							<td></td>
+							<td><a href="/disco">/disco</a></td>
+						</tr>
+						<tr>
+							<td>Hello</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>UI Service</td>
+							<td><a href="/ui/hello">/ui/hello</a></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Validation Service</td>
+							<td><a href="/valid/api/hello">/valid/api/hello</a></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Report Service</td>
+							<td><a href="/report/api/hello">/report/api/hello</a></td>
+            </tr>
+						<tr>
+							<td>Healthchecks</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Gateway Service</td>
+							<td><a href="/actuator/health">/actuator/health</a></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>UI Service</td>
+							<td><a href="/ui/actuator/health">/ui/actuator/health</a></td>
+            </tr>
+						<tr>
+							<td></td>
+							<td>Validation Service</td>
+							<td><a href="/valid/actuator/health">/valid/actuator/health</a></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>Report Service</td>
+							<td><a href="/report/actuator/health">/report/actuator/health</a></td>
+            </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
+
 </html>

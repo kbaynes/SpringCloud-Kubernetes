@@ -1,0 +1,92 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: ui-svc-default
+        uri: lb://ui-svc
+        predicates:
+        - Path=/
+        filters:
+        - RedirectTo=307, /ui/
+        # - RewritePath=/(?<segment>.*), /ui/$\{segment}
+        - name: Hystrix
+          args:
+            name: ui-svc-default-fallback
+            fallbackUri: forward:/uiFallback
+      - id: ui-svc-welcome
+        uri: lb://ui-svc
+        predicates:
+        - Path=/*.*
+        filters:
+        - RedirectTo=307, /ui/
+        # - RewritePath=/(?<segment>.*), /ui/$\{segment}
+        - name: Hystrix
+          args:
+            name: ui-svc-welcome-fallback
+            fallbackUri: forward:/uiFallback
+      - id: ui-svc
+        uri: lb://ui-svc
+        predicates:
+        - Path=/ui/**
+        filters:
+        - name: Hystrix
+          args:
+            name: ui-svc-fallback
+            fallbackUri: forward:/uiFallback
+      - id: report-svc
+        uri: lb://report-svc
+        predicates:
+        - Path=/report/**
+        filters:
+        - name: Hystrix
+          args:
+            name: report-svc-fallback
+            fallbackUri: forward:/reportFallback
+      - id: valid-svc
+        uri: lb://valid-svc
+        predicates:
+        - Path=/valid/**
+        filters:
+        - name: Hystrix
+          args:
+            name: valid-svc-fallback
+            fallbackUri: forward:/validFallback
+      - id: disco-svc
+        uri: lb://disco-svc
+        predicates:
+        - Path=/disco
+        filters:
+        - RewritePath=/disco,/
+        - name: Hystrix
+          args:
+            name: disco-svc-fallback
+            fallbackUri: forward:/discoFallback
+      - id: disco-svc-eureka
+        uri: lb://disco-svc
+        predicates:
+        - Path=/eureka/**
+        filters:
+        - name: Hystrix
+          args:
+            name: disco-svc-eureka-fallback
+            fallbackUri: forward:/discoFallback
+        # filters:
+        # - RewritePath=/eureka/(?<segment>/?.*), /eureka/$\{segment}
+      - id: htxdbd-svc
+        uri: lb://htxdbd-svc
+        predicates:
+        - Path=/hystrix/**
+      
+      - id: htxdbd-svc-webjars
+        uri: lb://htxdbd-svc
+        predicates:
+        - Path=/webjars/**
+        # filters:
+        # - RewritePath=/webjars/(?<segment>/?.*), /$\{segment}
+
+management:
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
+        
