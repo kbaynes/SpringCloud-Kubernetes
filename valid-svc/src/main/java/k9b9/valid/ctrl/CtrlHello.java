@@ -19,8 +19,8 @@ public class CtrlHello {
   RestTemplate restTemplate;
 
   @GetMapping("/hello")
-  public Hello Hello(@Value("${spring.application.name}") String appName, @Value("${local.server.port}") String serverPort) {
-    return new Hello(String.format("Hello from %s on port %s", appName, serverPort));
+  public Hello Hello(@Value("${spring.application.name}") String appName, @Value("${local.server.port}") String serverPort, @Value("${test.docker.bootstrap.value}") String testCfgSvcValue) {
+    return new Hello(String.format("Hello from %s on port %s '%s'", appName, serverPort, testCfgSvcValue));
   }
 
   /**

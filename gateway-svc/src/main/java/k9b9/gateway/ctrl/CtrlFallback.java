@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CtrlFallback {
 
+  
+
   String fbTemplate = "%s has exceeded the response timeout. Try again later.";
   
   @GetMapping("/validFallback")

@@ -9,26 +9,16 @@
         },
         {
             "type": "java",
-            "name": "Launch HelloTestAsync",
-            "request": "launch",
-            "mainClass": "k9b9.valid.HelloTestAsync",
-            "projectName": "valid-svc"
-        },
-        {
-            "type": "java",
-            "name": "Launch ConfigApp",
-            "request": "launch",
-            "mainClass": "k9b9.config.ConfigApp"
-        },
-        {
-            "type": "java",
             "name": "DiscoApp<disco-svc>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.disco.DiscoApp",
             "projectName": "disco-svc",
-            "args": ""
+            "args": [
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
+            ]
         },
         {
             "type": "java",
@@ -38,7 +28,10 @@
             "console": "internalConsole",
             "mainClass": "k9b9.ui.UiApp",
             "projectName": "ui-svc",
-            "args": ""
+            "args": [
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
+            ]
         },
         {
             "type": "java",
@@ -49,7 +42,9 @@
             "mainClass": "k9b9.report.ReportApp",
             "projectName": "report-svc",
             "args": [
-                "--spring.profiles.active=default,test,nojpa"
+                "--spring.profiles.active=default,test,nojpa",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -61,7 +56,9 @@
             "mainClass": "k9b9.report.ReportApp",
             "projectName": "report-svc",
             "args": [
-                "--spring.profiles.active=default,nojpa"
+                "--spring.profiles.active=default,nojpa",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -73,7 +70,9 @@
             "mainClass": "k9b9.valid.ValidApp",
             "projectName": "valid-svc",
             "args": [
-                "--spring.profiles.active=default,test,nojpa"
+                "--spring.profiles.active=default,test,nojpa",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -85,7 +84,9 @@
             "mainClass": "k9b9.valid.ValidApp",
             "projectName": "valid-svc",
             "args": [
-                "--spring.profiles.active=default,nojpa"
+                "--spring.profiles.active=default,nojpa",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -96,7 +97,11 @@
             "console": "internalConsole",
             "mainClass": "k9b9.gateway.GatewayApp",
             "projectName": "gateway-svc",
-            "args": ""
+            "args": [
+                "--spring.profiles.active=default",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
+            ]
         },
         {
             "type": "java",
@@ -107,7 +112,9 @@
             "mainClass": "k9b9.htxdbd.HtxdbdApp",
             "projectName": "htxdbd-svc",
             "args": [
-                "--spring.profiles.active=default"
+                "--spring.profiles.active=default",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -119,7 +126,9 @@
             "mainClass": "k9b9.htxdbd.HtxdbdApp",
             "projectName": "htxdbd-svc",
             "args": [
-                "--spring.profiles.active=default,test"
+                "--spring.profiles.active=default,test",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
+                "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
@@ -131,7 +140,8 @@
             "mainClass": "k9b9.config.ConfigApp",
             "projectName": "config-svc",
             "args": [
-                "--spring.profiles.active=default"
+                "--spring.profiles.active=default",
+                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka"
             ]
         }
     ]
