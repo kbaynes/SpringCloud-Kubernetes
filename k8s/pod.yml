@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sck8s
+  labels:
+    pod: sck8s
+spec:
+  hostNetwork: true
+  dnsPolicy: Default
+  containers:
+  - name: disco
+    image: localhost:5000/sck8s-disco:v1
+    # there is no registry at localhost:5000 in the pod so this will always fail to pull
+    # use minikube cache add to push images, then never pull from within the pod
+    imagePullPolicy: Never
+    ports:
+      - containerPort: 8761
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: config
+    image: localhost:5000/sck8s-config:v1
+    imagePullPolicy: Never
+    ports:
+      - containerPort: 8090
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: gateway
+    image: localhost:5000/sck8s-gateway:v1
+    imagePullPolicy: Never
+    ports:
+      - containerPort: 8080
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: ui
+    image: localhost:5000/sck8s-ui:v1
+    imagePullPolicy: Never
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default,rndprt
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: valid
+    image: localhost:5000/sck8s-valid:v1
+    imagePullPolicy: Never
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default,rndprt
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP

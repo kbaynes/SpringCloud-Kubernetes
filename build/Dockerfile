@@ -8,7 +8,7 @@ RUN apk --no-cache add openjdk11 \
     && chmod +x /srv/app
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} /srv/app/app.jar
-COPY target/bootstrap.properties /srv/app/application.properties
+# COPY target/bootstrap.properties /srv/app/application.properties
 RUN chmod +x /srv/app/app.jar
 ENTRYPOINT ["java","-jar","/srv/app/app.jar"]
 # ENTRYPOINT ["java","-jar","/srv/app/app.jar", \

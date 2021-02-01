@@ -56,7 +56,7 @@ Hystrix Dashboard Gateway - Not functional. App does not have consistent servlet
 
 ## Docker
 
-The Docker containers are built via the build script . See the Building section.
+The Docker containers are built via the build script. See the Building section.
 
 Docker network name is set in build/build.sh to docker_network_name="k9b9sck8s". All components are wired to use this network.
 
@@ -64,8 +64,64 @@ Docker network name is set in build/build.sh to docker_network_name="k9b9sck8s".
 
 The Zipkin runs as a simple Docker container. Run it from the command line:
 
-`docker run --name zipkin --network k9b9sck8s -d -p 9411:9411 openzipkin/zipkin`
+`docker run --name zipkin --network k9b9sck8s --hostname zipkin -d -p 9411:9411 openzipkin/zipkin`
 
+---
 
+MiniKube Installation on Mac
 
+https://gist.github.com/kevin-smets/b91a34cea662d0c523968472a81788f7
 
+---
+
+# Detailed Run and Test for Docker
+
+Install Docker
+Install Docker Registry Locally
+Install Zipkin
+Build all projects/containers
+Run all projects/containers
+Open UI home page
+Open Eureka Discovery home page
+Open Zipkin home page
+Run the Exercise Test
+• Check the Zipkin output
+• 
+Stop the Valid Service
+Check the Valid Hello endpoint to see the circuit breaker working
+
+# Detailed Run and Test for MiniKube
+
+Install MiniKube
+(kubectl is now configured to use "minikube" cluster and "default" namespace by default)
+minikube start
+minikube dashboard
+
+```
+minikube start --driver=docker
+# or --driver=hyperkit
+# optional: minikube config set driver hyperkit (or docker)
+# create a hello-node to test
+kubectl create deployment disco-node --image=localhost:5000/k9b9-sck8s-disco-v1
+# expose hello-node on 9080
+kubectl expose deployment disco-node --type=LoadBalancer --port=8761
+minikube service disco-node
+# show IP
+kubectl get node -o wide
+# show the hello-node in browser
+
+kubectl delete service disco-node
+kubectl delete deployment disco-node
+
+To deploy the pod (sck8s):
+
+kubectl apply -f k8s/pod.yml
+kubectl exec --stdin --tty sck8s -- /usr/bin/bash
+
+# get a shell on minikube
+docker exec -it minikube /usr/bin/bash
+
+minikube delete
+```
+See: https://github.com/kubernetes/minikube/issues/9016
+(To go back to docker use minikube start --driver=docker)

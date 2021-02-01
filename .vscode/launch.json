@@ -35,56 +35,56 @@
         },
         {
             "type": "java",
-            "name": "ReportApp<report-svc> test nojpa",
+            "name": "ReportApp<report-svc> RandomPort",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.report.ReportApp",
             "projectName": "report-svc",
             "args": [
-                "--spring.profiles.active=default,test,nojpa",
+                "--spring.profiles.active=default,rndprt",
                 "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
                 "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
             "type": "java",
-            "name": "ReportApp<report-svc> nojpa",
+            "name": "ReportApp<report-svc>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.report.ReportApp",
             "projectName": "report-svc",
             "args": [
-                "--spring.profiles.active=default,nojpa",
+                "--spring.profiles.active=default",
                 "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
                 "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
             "type": "java",
-            "name": "ValidApp<valid-svc> test nojpa",
+            "name": "ValidApp<valid-svc> RandomPort",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.valid.ValidApp",
             "projectName": "valid-svc",
             "args": [
-                "--spring.profiles.active=default,test,nojpa",
+                "--spring.profiles.active=default,rndprt",
                 "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
                 "--spring.cloud.config.uri=http://localhost:8090"
             ]
         },
         {
             "type": "java",
-            "name": "ValidApp<valid-svc> nojpa",
+            "name": "ValidApp<valid-svc>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.valid.ValidApp",
             "projectName": "valid-svc",
             "args": [
-                "--spring.profiles.active=default,nojpa",
+                "--spring.profiles.active=default",
                 "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
                 "--spring.cloud.config.uri=http://localhost:8090"
             ]
@@ -119,14 +119,14 @@
         },
         {
             "type": "java",
-            "name": "HtxdbdApp<htxdbd-svc> test",
+            "name": "HtxdbdApp<htxdbd-svc> RandomPort",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "mainClass": "k9b9.htxdbd.HtxdbdApp",
             "projectName": "htxdbd-svc",
             "args": [
-                "--spring.profiles.active=default,test",
+                "--spring.profiles.active=default,rndprt",
                 "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
                 "--spring.cloud.config.uri=http://localhost:8090"
             ]
