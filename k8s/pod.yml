@@ -15,6 +15,13 @@ spec:
     imagePullPolicy: Never
     ports:
       - containerPort: 8761
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -35,6 +42,13 @@ spec:
     imagePullPolicy: Never
     ports:
       - containerPort: 8090
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -55,6 +69,13 @@ spec:
     imagePullPolicy: Never
     ports:
       - containerPort: 8080
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -73,6 +94,15 @@ spec:
   - name: ui
     image: localhost:5000/sck8s-ui:v1
     imagePullPolicy: Never
+    ports:
+      - containerPort: 8082
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default,rndprt
@@ -91,6 +121,13 @@ spec:
   - name: valid
     image: localhost:5000/sck8s-valid:v1
     imagePullPolicy: Never
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default,rndprt
@@ -106,3 +143,67 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  - name: report
+    image: localhost:5000/sck8s-report:v1
+    imagePullPolicy: Never
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default,rndprt
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: htxdbd
+    image: localhost:5000/sck8s-htxdbd:v1
+    imagePullPolicy: Never
+    ports:
+      - containerPort: 8088
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: default
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  - name: zipkin
+    image: openzipkin/zipkin
+    imagePullPolicy: Never
+    ports:
+      - containerPort: 9411
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"

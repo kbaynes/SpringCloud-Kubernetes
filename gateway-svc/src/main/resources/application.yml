@@ -76,11 +76,16 @@ spring:
         uri: lb://htxdbd-svc
         predicates:
         - Path=/hystrix/**
-      
       - id: htxdbd-svc-webjars
         uri: lb://htxdbd-svc
         predicates:
         - Path=/webjars/**
+        # filters:
+        # - RewritePath=/webjars/(?<segment>/?.*), /$\{segment}
+      - id: zipkin
+        uri: http://localhost:9411
+        predicates:
+        - Path=/zipkin/**
         # filters:
         # - RewritePath=/webjars/(?<segment>/?.*), /$\{segment}
 

@@ -1,19 +1,38 @@
 # SpringCloud-Kubernetes
 
-A basic Spring Cloud microservices architecture running on Kubernetes (and also locally for development). Where possible, Spring components have been used. Organized in a monorepo containg multiple projects/components.
+A basic Spring Cloud microservices architecture running on Kubernetes (and also locally for development). Where possible, Spring components have been used. For ease of development, the project code is organized into a monorepo containg multiple projects/components.
+
+Assumptions:
+- Minikube: Must be running minikube to host the Kubernetes cluster.
+- Docker: Must have Docker installed for building containers
+- Local Registry: Must run local Docker registry node
 
 ### Features:
 
-API Gateway Service - Spring Cloud Gateway
-Discovery Service w/ Dashboard - Spring Cloud Eureka
-Gateway Load Balancing - API Gateway load balances between instances of service
-Client-Side Load Balancing - Inter-component REST requests load balance between instances of microservice
-Circuit Breakers - Fallback responses for non-responsive microservices
-Hystrix Dashboard - Working via direct access, not gateway (due to Hystrix)
-UI Service - Web UI
-Config Service - All components pull config from config server
+    API Gateway Service         - Spring Cloud Gateway
+    Discovery Service/Dashboard - Spring Cloud Eureka
+    Gateway Load Balancing      - API Gateway load balances between instances 
+                                  of service
+    Client-Side Load Balancing  - Inter-component REST requests load balance 
+                                  between instances of microservice
+    Circuit Breakers            - Fallback responses for non-responsive microservices
+    Hystrix Dashboard           - Working via direct access, not gateway (due to Hystrix) 
+                                  (Replace in production)
+    UI Service                  - Web UI
+    Config Service              - All components pull config from config server 
+                                  (Not Working as designed, needs testing)
+                                  Should be replaced with Kubernetes ConfigMap
+    Zipkin                      - Tracing
+    Kubernetes Dashbaord        - Open via build script, look for Pod 'sck8s'. 
+    Build Script                - Interactive build script makes it easy to build and 
+                                  deploy the system (bash build/build.sh)
+                                  Three dots > Logs.
+    Cross-Platform Builder      - Run build/_builder.sh to get a Docker container which
+                                  can build the project (no need to install/config Java or Maven)
 
 ## Running
+
+Runs in Minikube, via the build script.
 
 This project can be run in Docker via the build script. See the Building section. See the Docker section.
 
@@ -44,15 +63,16 @@ Hystrix Dashboard Gateway - Not functional. App does not have consistent servlet
 [Zipkin](http://localhost:9411)
 
 ### Ports
-    svc name      port   srvr name
-    ------------------------------
-    gateway-svc   8080   gateway
-    ui-svc        8082   ui
-    report-svc    8084   report
-    valid-svc     8086   valid
-    htxdbd-svc    8088   htxdbd
-    config-svc    8090   config
-    disco-svc     8761   disco
+    svc name      port   srvr name  startup order
+    ---------------------------------------------
+    gateway-svc   8080   gateway    2
+    ui-svc        8082   ui         -
+    report-svc    8084   report     -
+    valid-svc     8086   valid      -
+    htxdbd-svc    8088   htxdbd     -
+    disco-svc     8761   disco      1
+    config-svc    8888   config     3
+    zipkin        9411   zipkin     -
 
 ## Docker
 
@@ -92,7 +112,7 @@ Check the Valid Hello endpoint to see the circuit breaker working
 
 # Detailed Run and Test for MiniKube
 
-Install MiniKube
+Install [MiniKube](https://minikube.sigs.k8s.io/docs/start/)
 (kubectl is now configured to use "minikube" cluster and "default" namespace by default)
 minikube start
 minikube dashboard
@@ -100,7 +120,13 @@ minikube dashboard
 ```
 minikube start --driver=docker
 # or --driver=hyperkit
-# optional: minikube config set driver hyperkit (or docker)
+# or --driver=virtualbox
+
+# optional: minikube config set driver hyperkit 
+#(or docker or virtualbox)
+
+bash build/build.sh
+
 # create a hello-node to test
 kubectl create deployment disco-node --image=localhost:5000/k9b9-sck8s-disco-v1
 # expose hello-node on 9080
@@ -118,6 +144,9 @@ To deploy the pod (sck8s):
 kubectl apply -f k8s/pod.yml
 kubectl exec --stdin --tty sck8s -- /usr/bin/bash
 
+# show status of the pod
+kubectl describe pod/sck8s -n default
+
 # get a shell on minikube
 docker exec -it minikube /usr/bin/bash
 
@@ -125,3 +154,4 @@ minikube delete
 ```
 See: https://github.com/kubernetes/minikube/issues/9016
 (To go back to docker use minikube start --driver=docker)
+(drivers: virtualbox, docker, hyperkit)

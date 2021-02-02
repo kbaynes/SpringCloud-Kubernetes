@@ -16,6 +16,7 @@ functions=( \
   f-cache-project \
   f-kube-redeploy-pod \
   f-kube-pod-shell \
+  f-kube-dashboard \
 )
 
 function_desc=( \
@@ -30,6 +31,7 @@ function_desc=( \
   "Transfer project image to Minikube images cache" \
   "Re-deploy the Pod to Minikube (delete/apply)" \
   "Get a shell on the Pod" \
+  "Open the Kubernetes dashboard" \
 )
 
 projects_startup_order=( \
@@ -158,7 +160,10 @@ f-cache-all() {
 
 cache_project() {
   printf "minikube cache add $local_registry/$img_id:$img_version \n"
-  minikube cache delete $local_registry/$img_id:$img_version
+  hasImg=`minikube cache list | grep $local_registry/$img_id:$img_version`
+  if [[ "$hasImg" != "" ]]; then
+    minikube cache delete $local_registry/$img_id:$img_version
+  fi
   minikube cache add $local_registry/$img_id:$img_version
 }
 
@@ -181,6 +186,10 @@ f-kube-redeploy-pod() {
 
 f-kube-pod-shell() {
   kubectl exec --stdin --tty sck8s -- /bin/sh
+}
+
+f-kube-dashboard() {
+  minikube dashboard
 }
 
 f-docker-run() {
