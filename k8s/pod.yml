@@ -8,6 +8,7 @@ spec:
   hostNetwork: true
   dnsPolicy: Default
   containers:
+
   - name: disco
     image: localhost:5000/sck8s-disco:v1
     # there is no registry at localhost:5000 in the pod so this will always fail to pull
@@ -15,13 +16,6 @@ spec:
     imagePullPolicy: Never
     ports:
       - containerPort: 8761
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -37,18 +31,12 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: config
     image: localhost:5000/sck8s-config:v1
     imagePullPolicy: Never
     ports:
-      - containerPort: 8090
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
+      - containerPort: 8888
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -64,18 +52,12 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: gateway
     image: localhost:5000/sck8s-gateway:v1
     imagePullPolicy: Never
     ports:
       - containerPort: 8080
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -91,18 +73,12 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: ui
     image: localhost:5000/sck8s-ui:v1
     imagePullPolicy: Never
     ports:
       - containerPort: 8082
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default,rndprt
@@ -118,16 +94,10 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: valid
     image: localhost:5000/sck8s-valid:v1
     imagePullPolicy: Never
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default,rndprt
@@ -143,16 +113,10 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: report
     image: localhost:5000/sck8s-report:v1
     imagePullPolicy: Never
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default,rndprt
@@ -168,18 +132,12 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: htxdbd
     image: localhost:5000/sck8s-htxdbd:v1
     imagePullPolicy: Never
     ports:
       - containerPort: 8088
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"
     env:
     - name: SPRING_PROFILES_ACTIVE
       value: default
@@ -195,15 +153,9 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  
   - name: zipkin
     image: openzipkin/zipkin
-    imagePullPolicy: Never
+    imagePullPolicy: IfNotPresent
     ports:
       - containerPort: 9411
-    resources:
-      limits:
-        memory: 512Mi
-        cpu: "1"
-      requests:
-        memory: 256Mi
-        cpu: "0.2"

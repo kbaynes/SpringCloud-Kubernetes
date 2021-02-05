@@ -12,11 +12,7 @@ functions=( \
   f-docker-run-all \
   f-build-run \
   f-docker-stop-all \
-  f-cache-all \
-  f-cache-project \
-  f-kube-redeploy-pod \
-  f-kube-pod-shell \
-  f-kube-dashboard \
+  f-docker-zipkin \
 )
 
 function_desc=( \
@@ -27,59 +23,8 @@ function_desc=( \
   "Run all project containers, in correct order" \
   "Build then run a single project/container in Docker" \
   "Stop all Docker containers in this project" \
-  "Transfer all images to Minikube images cache" \
-  "Transfer project image to Minikube images cache" \
-  "Re-deploy the Pod to Minikube (delete/apply)" \
-  "Get a shell on the Pod" \
-  "Open the Kubernetes dashboard" \
+  "Run Zipkin in Docker" \
 )
-
-projects_startup_order=( \
-  disco-svc \
-  config-svc \
-  gateway-svc \
-  ui-svc \
-  report-svc \
-  valid-svc \
-  htxdbd-svc \
-)
-
-projects=( \
-  gateway-svc \
-  ui-svc \
-  report-svc \
-  valid-svc \
-  htxdbd-svc \
-  config-svc \
-  disco-svc \
-)
-
-ports=( \
-  8080 \
-  8082 \
-  8084 \
-  8086 \
-  8088 \
-  8090 \
-  8761 \
-)
-# gateway-svc : 8080
-# ui-svc      : 8082
-# report-svc  : 8084
-# valid-svc   : 8086
-# htxdbd-svc  : 8088
-# config-svc  : 8090
-# disco-svc   : 8761
-component_port=0
-
-# component_name is generated from project name
-parent_project_name="sck8s"
-dockerhub_registry="k9b9/sck8s"
-docker_network_name="k9b9sck8s"
-local_registry="localhost:5000"
-img_version="v1"
-base_path=`pwd`
-project_name="empty"
 
 f-build-all() {
   for i in "${!projects[@]}"; do
@@ -142,56 +87,6 @@ build_container() {
   popd
 }
 
-f-cache-project() {
-  pick_project
-  cache_project
-  cache_reload
-  cache_list
-}
-
-f-cache-all() {
-  for i in "${!projects[@]}"; do
-    set_project $i
-    cache_project
-  done
-  cache_reload
-  cache_list
-}
-
-cache_project() {
-  printf "minikube cache add $local_registry/$img_id:$img_version \n"
-  hasImg=`minikube cache list | grep $local_registry/$img_id:$img_version`
-  if [[ "$hasImg" != "" ]]; then
-    minikube cache delete $local_registry/$img_id:$img_version
-  fi
-  minikube cache add $local_registry/$img_id:$img_version
-}
-
-cache_reload() {
-  printf "#### minikube cache reload ... \n"
-  minikube cache reload
-}
-
-cache_list() {
-  printf "#### minikube cache list : \n"
-  minikube cache list
-}
-
-f-kube-redeploy-pod() {
-  kubectl delete pod sck8s
-  kubectl apply -f $base_path/k8s/pod.yml
-  kubectl delete service sck8s
-  kubectl apply -f $base_path/k8s/service.yml 
-}
-
-f-kube-pod-shell() {
-  kubectl exec --stdin --tty sck8s -- /bin/sh
-}
-
-f-kube-dashboard() {
-  minikube dashboard
-}
-
 f-docker-run() {
   pick_project
   docker_run
@@ -212,6 +107,10 @@ f-docker-stop-all() {
     printf "Stopping: $component_name\n"
     sleep 2
   done
+}
+
+f-docker-zipkin() {
+  docker run --name zipkin --network k9b9sck8s --hostname zipkin --rm -d -p 9411:9411 openzipkin/zipkin
 }
 # 
 # Runs the currently selected project
@@ -235,58 +134,20 @@ docker_run() {
     docker network create $docker_network_name
   fi
 
+    # --hostname $component_name \
+    # --env EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://disco:8761/eureka \
+    # --env SPRING_CLOUD_CONFIG_URI=http://config:8090 \
   docker run \
     --name $component_name \
     --label $img_id \
     --network $docker_network_name \
-    --hostname $component_name \
-    --env SPRING_PROFILES_ACTIVE=default,docker \
-    --env EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://disco:8761/eureka \
-    --env SPRING_CLOUD_CONFIG_URI=http://config:8090 \
     --detach \
     --rm \
+    --env SPRING_PROFILES_ACTIVE=default \
     -p $component_port:$component_port \
     $local_registry/$img_id:$img_version
   # docker ps -a
 }
 
-pick_project() {
-  for i in "${!projects[@]}"; do
-    printf "   $i  ${projects[$i]}\n"
-  done
-  printf "\n"
-  read -p "Project number:  " -r
-  set_project $REPLY
-}
-# 
-# Sets globals based on index in project array
-# 
-set_project() {
-  project_name=${projects[$1]}
-  component_port=${ports[$1]}
-  component_name=`python build/split-project-name.py $project_name`
-  # img_id like 'k9b9-sck8s-config-v1'
-  img_id="$parent_project_name-$component_name"
-}
 
-f-help() {
-  # printf `cat build/help.txt\n`
-  for i in "${!functions[@]}"; do
-    f_name=${functions[$i]}
-    f_desc=${function_desc[$i]}
-    printf "   $i  $f_name - $f_desc\n"
-  done
-  printf "\n"
-}
-
-if [ ! -z "$1" ]; then
-  f-action $1
-  exit 0
-else
-  printf "\nEnter the number of the function and press Enter :\n"
-  f-help
-
-  read -p "Function number:  " -r
-  printf "Running function ${functions[$REPLY]}\n\n"    # (optional) move to a new line
-  ${functions[$REPLY]}
-fi
+source build/shared.sh

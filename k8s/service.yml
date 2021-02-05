@@ -20,14 +20,18 @@ spec:
       nodePort: 31761
       port: 8761
       targetPort: 8761
-    - name: config
-      nodePort: 31090
-      port: 8090
-      targetPort: 8090
+    # - name: config
+    #   nodePort: 31888
+    #   port: 8888
+    #   targetPort: 8888
     - name: gateway
       nodePort: 31080
       port: 8080
       targetPort: 8080
+    - name: hystrix
+      nodePort: 31088
+      port: 8088
+      targetPort: 8088
     # - name: http
     #   port: 80
     #   targetPort: 80

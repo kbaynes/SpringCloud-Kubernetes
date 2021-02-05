@@ -21,12 +21,12 @@ public class CtrlHello {
   RestTemplate restTemplate;
 
   @GetMapping("/hello")
-  public Hello Hello(@Value("${spring.application.name}") String appName, @Value("${local.server.port}") String serverPort, @Value("${test.docker.bootstrap.value:ValueMissing}") String value) {
+  public Hello Hello(@Value("${spring.application.name}") String appName, @Value("${local.server.port}") String serverPort, @Value("${foo}") String value) {
     return new Hello(String.format("Hello from %s on port %s '%s'", appName, serverPort, value));
   }
 
   /**
-   * Calls the given service using it's name, as found by discovery service
+   * Calls the given service using it's name, as found by discovery service, like ui-svc
    * @param serviceName
    * @return
    */

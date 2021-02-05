@@ -1,9 +1,28 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: ""
+# enable all actuator endpoints
+management:
+  endpoint:
+    hystrix:
+      stream:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: 
+        - "*"
+        - hystrix.stream
+eureka:
+  instance:
+    status-page-url-path: ${server.servlet.contextPath}/actuator/health
 spring:
   cloud:
     gateway:
       routes:
       - id: ui-svc-default
-        uri: lb://ui-svc
+        uri: lb://ui
         predicates:
         - Path=/
         filters:
@@ -14,7 +33,7 @@ spring:
             name: ui-svc-default-fallback
             fallbackUri: forward:/uiFallback
       - id: ui-svc-welcome
-        uri: lb://ui-svc
+        uri: lb://ui
         predicates:
         - Path=/*.*
         filters:
@@ -25,7 +44,7 @@ spring:
             name: ui-svc-welcome-fallback
             fallbackUri: forward:/uiFallback
       - id: ui-svc
-        uri: lb://ui-svc
+        uri: lb://ui
         predicates:
         - Path=/ui/**
         filters:
@@ -33,8 +52,8 @@ spring:
           args:
             name: ui-svc-fallback
             fallbackUri: forward:/uiFallback
-      - id: report-svc
-        uri: lb://report-svc
+      - id: report
+        uri: lb://report
         predicates:
         - Path=/report/**
         filters:
@@ -42,8 +61,8 @@ spring:
           args:
             name: report-svc-fallback
             fallbackUri: forward:/reportFallback
-      - id: valid-svc
-        uri: lb://valid-svc
+      - id: valid
+        uri: lb://valid
         predicates:
         - Path=/valid/**
         filters:
@@ -52,7 +71,7 @@ spring:
             name: valid-svc-fallback
             fallbackUri: forward:/validFallback
       - id: disco-svc
-        uri: lb://disco-svc
+        uri: lb://disco
         predicates:
         - Path=/disco
         filters:
@@ -62,7 +81,7 @@ spring:
             name: disco-svc-fallback
             fallbackUri: forward:/discoFallback
       - id: disco-svc-eureka
-        uri: lb://disco-svc
+        uri: lb://disco
         predicates:
         - Path=/eureka/**
         filters:
@@ -72,12 +91,18 @@ spring:
             fallbackUri: forward:/discoFallback
         # filters:
         # - RewritePath=/eureka/(?<segment>/?.*), /eureka/$\{segment}
+      - id: config-svc
+        uri: lb://config
+        predicates:
+        - Path=/config
+        filters:
+        - RewritePath=/config,/
       - id: htxdbd-svc
-        uri: lb://htxdbd-svc
+        uri: lb://htxdbd
         predicates:
         - Path=/hystrix/**
       - id: htxdbd-svc-webjars
-        uri: lb://htxdbd-svc
+        uri: lb://htxdbd
         predicates:
         - Path=/webjars/**
         # filters:
@@ -89,9 +114,4 @@ spring:
         # filters:
         # - RewritePath=/webjars/(?<segment>/?.*), /$\{segment}
 
-management:
-  endpoint:
-    hystrix:
-      stream:
-        enabled: true
         

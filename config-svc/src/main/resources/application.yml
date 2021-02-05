@@ -1,0 +1,29 @@
+# 8888 is default port for Config Server in Spring Cloud
+server:
+  port: 8888
+  servlet:
+    contextPath: ""
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/kbaynes/sck-config-1
+          default-label: main
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    status-page-url-path: ${server.servlet.contextPath}/actuator/health
+logging:
+  level:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: DEBUG

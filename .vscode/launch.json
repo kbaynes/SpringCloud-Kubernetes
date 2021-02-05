@@ -16,119 +16,7 @@
             "mainClass": "k9b9.disco.DiscoApp",
             "projectName": "disco-svc",
             "args": [
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "UiApp<ui-svc>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.ui.UiApp",
-            "projectName": "ui-svc",
-            "args": [
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "ReportApp<report-svc> RandomPort",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.report.ReportApp",
-            "projectName": "report-svc",
-            "args": [
-                "--spring.profiles.active=default,rndprt",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "ReportApp<report-svc>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.report.ReportApp",
-            "projectName": "report-svc",
-            "args": [
-                "--spring.profiles.active=default",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "ValidApp<valid-svc> RandomPort",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.valid.ValidApp",
-            "projectName": "valid-svc",
-            "args": [
-                "--spring.profiles.active=default,rndprt",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "ValidApp<valid-svc>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.valid.ValidApp",
-            "projectName": "valid-svc",
-            "args": [
-                "--spring.profiles.active=default",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "GatewayApp<gateway-svc>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.gateway.GatewayApp",
-            "projectName": "gateway-svc",
-            "args": [
-                "--spring.profiles.active=default",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "HtxdbdApp<htxdbd-svc>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.htxdbd.HtxdbdApp",
-            "projectName": "htxdbd-svc",
-            "args": [
-                "--spring.profiles.active=default",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
-            ]
-        },
-        {
-            "type": "java",
-            "name": "HtxdbdApp<htxdbd-svc> RandomPort",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "k9b9.htxdbd.HtxdbdApp",
-            "projectName": "htxdbd-svc",
-            "args": [
-                "--spring.profiles.active=default,rndprt",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka",
-                "--spring.cloud.config.uri=http://localhost:8090"
+                "--spring.profiles.active=default"
             ]
         },
         {
@@ -140,8 +28,103 @@
             "mainClass": "k9b9.config.ConfigApp",
             "projectName": "config-svc",
             "args": [
-                "--spring.profiles.active=default",
-                "--eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka"
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "GatewayApp<gateway-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.gateway.GatewayApp",
+            "projectName": "gateway-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "UiApp<ui-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.ui.UiApp",
+            "projectName": "ui-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ReportApp<report-svc> RandomPort",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.report.ReportApp",
+            "projectName": "report-svc",
+            "args": [
+                "--spring.profiles.active=default,rndprt"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ReportApp<report-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.report.ReportApp",
+            "projectName": "report-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ValidApp<valid-svc> RandomPort",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.valid.ValidApp",
+            "projectName": "valid-svc",
+            "args": [
+                "--spring.profiles.active=default,rndprt"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "ValidApp<valid-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.valid.ValidApp",
+            "projectName": "valid-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "HtxdbdApp<htxdbd-svc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.htxdbd.HtxdbdApp",
+            "projectName": "htxdbd-svc",
+            "args": [
+                "--spring.profiles.active=default"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "HtxdbdApp<htxdbd-svc> RandomPort",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "k9b9.htxdbd.HtxdbdApp",
+            "projectName": "htxdbd-svc",
+            "args": [
+                "--spring.profiles.active=default,rndprt"
             ]
         }
     ]
